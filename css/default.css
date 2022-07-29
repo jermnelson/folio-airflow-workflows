@@ -1,0 +1,30 @@
+body {
+  font-family: Source Sans Pro, Helvetica;
+}
+
+header {
+  background-color: #820000;
+  color: #FFFFFF;
+  display: grid;
+  grid-template-columns: 30% 50% 20%; 
+  grid-gap: 10px;
+  height: 43px;
+  padding-left: .5em;
+}
+
+.header-text {
+  font-size: 1.1em;
+  padding-top: .5em;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-gap: 10px;
+}
+
+.topics {
+  background-color: #A1A5D5;
+  border: 2px solid #10359A;
+
+}
