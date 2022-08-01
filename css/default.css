@@ -23,8 +23,12 @@ header {
   grid-gap: 10px;
 }
 
-.topics {
+.topic-btn {
   background-color: #A1A5D5;
-  border: 2px solid #10359A;
+  color: #FFFFFF;
+  padding: .5em;
+}
 
+.topics {
+  border: 2px solid #10359A;
 }

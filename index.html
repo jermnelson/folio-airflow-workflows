@@ -4,9 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Jeremy Nelson">
+    <meta name="description" content="WOLFcon 2022 presentation in Hamburg Germany on 2 September 2022">
     <title>FOLIO Bibliographic Workflow Automation with Airflow</title>
     <link rel="stylesheet" href="css/default.css">
-
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env>
+      - Jinja2
+      - paths:
+        - ./support.py
+    </py-env>
   </head>
   <body>
      <header>
@@ -27,20 +34,20 @@
      <section class="main">
        <div class="topics">
           <h2>Topics</h2>
+          <div>
+            <a href="#" class="topic-btn">Introduction to Airflow</a>
+          </div>
           <p>
-            <button>Introduction to Airflow</button>
+            <a href="#" class="topic-btn">Sinopia Editor Stack</a>
           </p>
           <p>
-            <button>Sinopia Editor Stack</button>
+            <a href="#" class="topic-btn">MARC Migration</a>
           </p>
           <p>
-            <button>MARC Migration</button>
-          </p>
-          <p>
-            <button>Discovery Integration</button>
+            <a href="#" class="topic-btn">Discovery Integration</a>
           </p>
        </div>
-       <div>
+       <div id="content">
          <p>
           Stanford University Libraries is currently migrating from legacy ILS to
           FOLIO as well as developing methods for integrating the Sinopia Linked Data
@@ -52,6 +59,7 @@
         </p>
        </div>
      </section>
+
    <script src="index.js"></script>
   </body>
 </html>
