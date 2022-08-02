@@ -26,7 +26,8 @@ header {
 .topic-btn {
   background-color: #A1A5D5;
   color: #FFFFFF;
-  padding: .5em;
+  margin: 1em;
+  padding: .25em;
 }
 
 .topics {
