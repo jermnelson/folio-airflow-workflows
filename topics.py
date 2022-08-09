@@ -7,6 +7,10 @@ from pyodide import create_proxy
 
 
 intro_airflow_template = Template("""<div><h2>What is Airflow?</h2>
+<h3>Used widely in Data Science and Machine Learning Applications</h3>
+<p>
+  
+</p>
 <p>
   <a href="https://airflow.apache.org/">Apache Airflow</a> is an open-source workflow 
   authoring, orchestration and management tool that allows for the construction of 
@@ -15,6 +19,7 @@ intro_airflow_template = Template("""<div><h2>What is Airflow?</h2>
   these tasks with a large number of technologies, both commercial cloud providers like
   Amazon and Google, along with popular open-source projects like Postgres, .., and ...
 </p>
+<
 <pre>
 
 
