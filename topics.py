@@ -9,8 +9,16 @@ from pyodide import create_proxy
 intro_airflow_template = Template("""<div><h2>What is Airflow?</h2>
 <p>
   <a href="https://airflow.apache.org/">Apache Airflow</a> is an open-source workflow 
-  authoring, orchestration and management tool that ... 
+  authoring, orchestration and management tool that allows for the construction of 
+  complex workflows, called DAGs (short for directed acyclic graphs), that are made up 
+  of one or more code-defined tasks. Airflow has a rich ecosystem of plugins for integrating
+  these tasks with a large number of technologies, both commercial cloud providers like
+  Amazon and Google, along with popular open-source projects like Postgres, .., and ...
 </p>
+<pre>
+
+
+</pre>
 </div>""")
 
 def intro2airflow(event):
@@ -47,17 +55,15 @@ def marc_migration(event):
  
     main.innerHTML = marc_migration_template.render()
 
-discovery_integration_template = Template("""<div><h2>Stanford's Searchworks</h2>
+future_workflows_template = Template("""<div><h2>Future Workflows</h2>
 <p>
- A critical and high-profile discovery service of Stanford University Libraries, 
- <a href="https://searchworks.stanford.edu/">SearchWorks</a> is a Blacklight-based 
- discovery system. 
+
 </p>
 </div>""")
 
-def discovery_integration(event):
+def future_workflows(event):
     main = js.document.getElementById('content')
     subtitle = js.document.getElementById('subtitle')
-    subtitle.innerHTML = "-- Discovery Integration"
+    subtitle.innerHTML = "-- Future Workflows"
  
-    main.innerHTML = discovery_integration_template.render()
+    main.innerHTML = future_workflows_template.render()

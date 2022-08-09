@@ -18,7 +18,7 @@
   <body>
      <py-script>
      import js
-     from topics import intro2airflow, sinopia_stack, marc_migration, discovery_integration
+     from topics import intro2airflow, sinopia_stack, marc_migration, future_workflows
      from pyodide import create_proxy 
 
      intro2airflow_btn = js.document.getElementById("intro2airflow")
@@ -30,8 +30,8 @@
      marc_migration_btn = js.document.getElementById("marc-migration")
      marc_migration_btn.addEventListener("click", create_proxy(marc_migration))
 
-     discovery_integration_btn = js.document.getElementById("discovery-integration")
-     discovery_integration_btn.addEventListener("click", create_proxy(discovery_integration))
+     future_workflows_btn = js.document.getElementById("future-workflows")
+     future_workflows_btn.addEventListener("click", create_proxy(future_workflows))
      
      </py-script>
      <header>
@@ -62,7 +62,7 @@
             <a href="#" class="topic-btn" id="marc-migration">MARC Migration</a>
           </p>
           <p>
-            <a href="#" class="topic-btn" id="discovery-integration">Discovery Integration</a>
+            <a href="#" class="topic-btn" id="future-workflows">Future Workflows</a>
           </p>
        </div>
        <div id="content">
@@ -73,7 +73,7 @@
           open-source workflow automation tool Airflow. Airflow allows us to automate the
           harvesting and extracting of MARC21 and RDF data from these external systems to FOLIO
           Inventory Instances, Holdings, and Items records by writing
-          Python-based deterministic acyclic graphs (DAG).
+          Python-based directed acyclic graphs (DAG).
         </p>
        </div>
      </section>
