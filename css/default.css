@@ -17,6 +17,13 @@ header {
   padding-top: .5em;
 }
 
+footer {
+  background-color: #820000;
+  color: #FFFFFF;
+  height: 30px;
+  padding-top: .5em;
+}
+
 .main {
   display: grid;
   grid-template-columns: 20% 80%;
