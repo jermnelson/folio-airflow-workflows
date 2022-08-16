@@ -25,9 +25,17 @@ intro_airflow_template = Template("""<div><h2>What is Airflow?</h2>
   <li><strong>Integrations</strong>
    Airflow has a rich ecosystem of plugins for integrating
    these tasks with a large number of technologies, both commercial cloud providers like
-   Amazon and Google, along with popular open-source projects like Postgres, .., and ...
+   <a href="https://airflow.apache.org/docs/apache-airflow-providers-amazon/stable/index.html">Amazon</a> and 
+   <a href="https://airflow.apache.org/docs/apache-airflow-providers-google/stable/index.html">Google</a>, 
+   along with popular open-source projects like 
+   <a href="https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/index.html">Postgres</a>, 
+   <a href="https://airflow.apache.org/docs/apache-airflow-providers-elasticsearch/stable/index.html">ElasticSearch</a>, 
+   and <a href="https://airflow.apache.org/docs/apache-airflow-providers-cncf-kubernetes/stable/index.html">Kubernetes</a>.     
    <br>
-   <img src="assets/aws.png" style="height: 75px" alt="AWS Logo"> 
+   <img src="assets/aws.png" style="height: 75px" alt="AWS Logo">
+   <img src="assets/postgresql.png" alt="PostgreSQL Logo" >
+   <img src="assets/elasticsearch.png" alt-"ElasticSearch Logo" >
+   <img src="assets/kubernetes.png" style="height: 75px" alt="Kubernetes Logo" /> 
   </li>
   <li><strong>Graphical/Web-based User Interface</strong></li>
   <li><strong>REST API</strong></li>
@@ -84,6 +92,17 @@ marc_migration_template = Template("""<div><h2>MARC Records Migration to FOLIO</
   the core migration from MARC21 binary and tab-separated files (TSV) to FOLIO Instances, Holdings, and Items records. 
 </p>
 <h2>Directed Acyclic Graph Workflows</h2>
+<h3><em>auto_bib_loads</em> DAG</h3>
+<p>
+  To start the workflow, we copy MARC21 files along with those records holdings and items information into TSV files into a 
+  mounted directory in the Airflow environment.  
+</p>
+<img src="assets/auto_bib_loads.png" alt="Auto BIB Loads DAG Graph" />
+<h4>Tasks for <em>auto_bib_load</em> DAG</h4>
+<ol>
+  <li>When the DAG is manually triggered, the <strong>create_bib_loads</strong> task iterates
+  through the mounted directory and creates groupings of records.</li>
+</ol>
 <h3><em>symphony_marc_import</em> DAG</h3>
 <p>
   The primary 
