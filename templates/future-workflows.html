@@ -1,0 +1,35 @@
+<div><h2>Future Workflows</h2>
+<h3>Circulation Migration: Loans and Requests</h3> 
+<p>
+  Using the <a href="https://github.com/FOLIO-FSE/folio_migration_tools">folio_migration_tools</a> 
+  support for migrating loans and requests, we plan on adding DAGs to support our own migration
+  of loans and requests from Symphony to FOLIO.
+</p>
+<h3>Migrating Bills</h3>
+<p>
+  Patron bills for such fines, missing, or damaged materials will be imported into FOLIO through one or more DAGs
+  in Airflow.
+</p>
+<h3>Ongoing MARC Record and User Loads</h3>
+<p>
+  By using the scheduling capabilities and the extensible nature of Airflow, we hope that we build DAGs for migrating 
+  MARC bibliographic records that may require customization beyond what is available in 
+  <em>mod-import</em>.
+</p>
+<p>
+  Likewise, our current method of importing users from Stanford's registar office is a manual process and so we 
+  want to leverage our existing tools to automate these user loads into FOLIO. 
+</p>
+<h3>Authority Records</h3>
+<p>
+  Just as we have automated MARC bibliographic record loading int FOLIO with Airflow, we plan to have a similar
+  functionality for importing MARC authority records into FOLIO.
+</p>
+<h3>Further Sinopia Integration</h3>
+<p>
+  Our current integration between Sinopia and FOLIO is very basic with only BIBFRAME Instances and Works resources 
+  being  exported out of Sinopia and into FOLIO. We hope to create richer FOLIO Instance records and expand our DAGs to 
+  also generate appropriate FOLIO Holdings records. We will also explore generating FOLIO Item records from 
+  BIBFRAME Item resources for such properties as Barcode and other item specific identifiers.
+</p>
+</div>

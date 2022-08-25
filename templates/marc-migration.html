@@ -1,0 +1,45 @@
+<div><h2>MARC Records Migration to FOLIO</h2>
+<p>
+  Stanford's migration of bibliographic data from our legacy ILS to FOLIO Library Services Platform,
+  is built with multiple open-source technologies. Our workflow DAGs and plugins are also licensed under
+  the Apache2 license and are available from <a href="https://github.com/sul-dlss/libsys-airflow/">LibSys Airflow</a>
+  repository.
+</p>
+<h3>FOLIO-FSE Migration Tools</h3>
+<p>
+  Stanford's DAGs use the open-source tools  <a href="https://github.com/FOLIO-FSE/folio_migration_tools/">FOLIO Migration Tools</a> 
+  and <a href="https://github.com/FOLIO-FSE/FolioClient">FolioClient</a> developed by Ebsco's FOLIO-FSE team for the majority of 
+  the core migration from MARC21 binary and tab-separated files (TSV) to FOLIO Instances, Holdings, and Items records. 
+</p>
+<h2>Directed Acyclic Graph Workflows</h2>
+<h3><em>auto_bib_loads</em> DAG</h3>
+<p>
+  To start the workflow, we copy MARC21 files along with those records holdings and items information into TSV files into a 
+  mounted directory in the Airflow environment.  
+</p>
+<img src="assets/auto_bib_loads.png" alt="Auto BIB Loads DAG Graph" />
+<h4>Tasks for <em>auto_bib_load</em> DAG</h4>
+<ol>
+  <li>When the DAG is manually triggered, the <strong>create_bib_loads</strong> task iterates
+  through the mounted directory and creates groupings of records.</li>
+  <li>As a temporary fix, the <strong>launch_ol_management</strong> task triggers the <em>optimistic_locking_management</em> 
+  DAG that removes the optimistic locking of FOLIO inventory records to facilitate easier batch imports.</li>
+  <li>The final task, <strong>launch_bib_imports</strong> triggers multiple runs of <em>symphony_marc_import</em> DAG based on 
+   the number of record groups from the <strong>create_bib_loads</strong>. The <em>symphony_marc_import</em> DAG is configured
+   so the maximum number of simultaneous is three, with any remaining DAG runs being queued and launched when one of three
+   slots open up after a DAG run is completed</li>
+</ol>
+<h3><em>symphony_marc_import</em> DAG</h3>
+<p>
+  The primary 
+</p>
+<h3><em>ingest_marc_to_srs</em> DAG</h3>
+<h3><em>fix_failed_record_loads</em>DAG</h3>
+<h2>Recent Functionality</h2>
+
+<h3>Boundwidths, Proceeding/Succeeding Titles</h3>
+
+<h3>MHLD</h3>
+
+
+</div>
