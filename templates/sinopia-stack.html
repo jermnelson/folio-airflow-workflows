@@ -5,13 +5,31 @@
   was initially funded by multiple Andrew W. Mellon Foundation grants. 
 </p>
 <h3>Sinopia's Linked Data Editor</h3>
-
+<p>
+  Started in 2018, Sinopia's goals include:
+</p>
+<ul>
+  <li>An online hosted environment that doesn't require local installation of any tools</li>
+  <li>Develop best practices for linked-data creation</li>
+  <li>New processes and workflows for cooperative cataloging within a linked-data context</li>
+  <li>Iterative and active agile development of Sinopia's tools</li> 
+  <li>Explore various linked-data ontologies while optimizing the tool-set for 
+      the Library of Congress's <a href="https://www.loc.gov/bibframe/">BIBFRAME</a>
+      vocabulary</li>
+</ul>
+<h3>Sinopia Architecture</h3>
 
 <h3>Sinopia's ILS Middleware</h3>
 <p>
-
+  In the fall of 2021, we began development of an Airflow environment for integrating Sinopia with a
+  a number of integrated library systems (ILS) like Sirsi-Dynix's Symphony and library service platforms
+  like <a href="https://folio.org/">FOLIO</a> and Ex Libris Alma.
 </p>
-<h4>Stanford's Airflow DAG</h4>
+<h4>Diagram of ILS Workflow for FOLIO:</h4>
+<p>
+  <img src="assets/sinopia-to-folio.png" alt="Sinopia and FOLIO Integration Diagram" />
+</p>
+<h3>Stanford's Airflow DAG</h3>
 <img src="assets/sinopia-stanford-workflow.png" style="height: 275px" alt="Stanford Sinopia DAG">
 <h4>Stanford's <em>process_folio</em> Task Group</h4>
 <img src="assets/sinopia-stanford-workflow-process_folio.png" style="height: 275px"  alt="Staford Sinopia process_marc TaskGroup">

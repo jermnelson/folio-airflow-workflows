@@ -31,8 +31,29 @@
 </ol>
 <h3><em>symphony_marc_import</em> DAG</h3>
 <p>
-  The primary 
+  The primary DAG for migrating MARC bibliographic records, the <em>symphony_marc_import</em> DAG is composed of three
+  TaskGroups, <strong>move-transform</strong>, <strong>marc21-and-tsv-folio</strong>, and finally <strong>post-to-folio</strong>
 </p>
+<img src="assets/symphony_marc_import-dag.png" alt="Symphony MARC Import DAG" />
+<h4>Move-Tranform TaskGroup</h4>
+<img src="assets/move-transforms-taskgroup.png" alt="Move-Transform TaskGroup" />
+<p>
+  The purpose of the <strong>move-transform</strong> is to take the MARC 21 file along with it's corresponding tsv files
+  and prepare the files for later processing in the <em>symphony_marc_import</em> DAG. </p> For example, 
+<ul>
+  <li>In the MARC file, the first 001 field contains the CATKEY, the Symphony record identifier, that needs to be 
+      prefixed with an <em>a</em>. The remaining 001 fields are moved to the 035 fields.</li>
+  <li>For the TSV files, the CATKEY is also prefixed with an <em>a</em> character and the spaces are removed from the 
+      BARCODE rows</li>
+</ul>
+<p>
+  After the changes are made, the files are moved into file directories that the 
+  <a href="https://github.com/FOLIO-FSE/folio_migration_tools/">folio_migration_tools</a> expect when run. 
+</p>
+<h4>MARC21 and TSV to FOLIO TaskGroup</h4>
+<img src="assets/marc21-and-tsv-to-folio-taskgroup.png" alt="MARC21 and TSV to FOLIO Records TaskGroup" />
+<h4>Post to FOLIO TaskGroup</h4>
+<img src="assets/post-to-folio-taskgroup.png" alt="POST FOLIO Records to FOLIO" />
 <h3><em>ingest_marc_to_srs</em> DAG</h3>
 <h3><em>fix_failed_record_loads</em>DAG</h3>
 <h2>Recent Functionality</h2>
