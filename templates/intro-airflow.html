@@ -32,10 +32,28 @@
   <li><strong>Graphical/Web-based User Interface</strong></li>
   <li><strong>REST API</strong></li>
 </ul>
-<h3>Example DAG with Tasks</h3>
+<h3>Example ETL (Extract-Transform-Load) DAG with Tasks</h3>
 <pre>
+def etl(*args):
 
+  def extract(*args, **kwargs):
+      print("Extract data from target")
+      return [{"id": 23455, "title": "A Fine Extraction"}]
 
+  def transform(*args, **kwargs):
+      input = kwargs['records']
+      output = []
+      for record in input:
+          record['title'] = f"{record['title']}, now transformed"
+          output.append(record)
+      return output
+
+  def load(*args, **kwargs):
+      transformed_records = kwargs['records']
+      database = kwargs['db']
+      database.load(transformed_records)
+
+  extract() >> transform() >> load()
 
 </pre>
 </div>
