@@ -21,7 +21,13 @@ footer {
   background-color: #820000;
   color: #FFFFFF;
   height: 30px;
+  padding-left: .25em;
   padding-top: .5em;
+
+}
+
+footer a {
+  color: #FFFFFF;
 }
 
 .main {

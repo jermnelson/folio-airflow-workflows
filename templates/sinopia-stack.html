@@ -18,22 +18,96 @@
       vocabulary</li>
 </ul>
 <h3>Sinopia Architecture</h3>
-
+<p>
+  Sinopia's editor is a <a href="https://reactjs.org/">React</a> Single Page App with a 
+  <a href="https://nodejs.org/en/">node.js</a> Server-side API. The API handles CRUD operations 
+  on Sinopia's RDF resources into AWS's <a href="https://aws.amazon.com/quickstart/architecture/mongodb/">MongoDB</a> 
+  service and also provides additional services for conversion of BIBFRAME RDF to MARC21, exports, indexing into an 
+  AWS's <a href="https://aws.amazon.com/opensearch-service/">ElasticSearch</a>, and the latest service, 
+  integration to various external library systems through the ILS Middleware Airflow environment.  
+</p>
 <h3>Sinopia's ILS Middleware</h3>
 <p>
   In the fall of 2021, we began development of an Airflow environment for integrating Sinopia with a
   a number of integrated library systems (ILS) like Sirsi-Dynix's Symphony and library service platforms
-  like <a href="https://folio.org/">FOLIO</a> and Ex Libris Alma.
+  like <a href="https://folio.org/">FOLIO</a> and Ex Libris Alma. We are hosting each Sinopia environment
+  (development, stage, and production) Airflow instance in AWS: 
 </p>
+<ul>
+  <li><a href="https://airflow.development.sinopia.io/ ">https://airflow.development.sinopia.io/ </a></li>
+  <li><a href="https://airflow.stage.sinopia.io/ ">https://airflow.stage.sinopia.io/ </a></li>
+  <li><a href="https://airflow.sinopia.io/ ">https://airflow.sinopia.io/ </a></li>
+</ul>
 <h4>Diagram of ILS Workflow for FOLIO:</h4>
 <p>
-  <img src="assets/sinopia-to-folio.png" alt="Sinopia and FOLIO Integration Diagram" />
+  <img src="assets/sinopia-to-folio.png" alt="Sinopia and FOLIO Integration Diagram" style="width: 1200px"/>
 </p>
-<h3>Stanford's Airflow DAG</h3>
-<img src="assets/sinopia-stanford-workflow.png" style="height: 275px" alt="Stanford Sinopia DAG">
+<h2>Stanford's Sinopia-to-FOLIO Workflow</h2>
+<h3>In Sinopia's Editor</h3>
+<img src="assets/sinopia-editor.png" alt="Sinopia Editor Screenshot" style="width: 1000px;" />
+ <ol>
+  <li>Cataloger is editing or viewing a record in Sinopia (ex: https://stage.sinopia.io/editor/resource/5289cdf5-816d-4307-ac0d-7cf3de412cb4)</li>
+  <li>Cataloger clicks on <em>Export to Catalog</em> button</li>
+  <li>Message is sent to Sinopia API</li>
+  <li>Sinopia API constructs an Amazon Simple Query Service (SQS) message and sends to queue</li>
+</ol>
+<h3>In Stanford's Sinopia DAG</h3>
+<img src="assets/sinopia-stanford-workflow.png" style="width: 1000px" alt="Stanford Sinopia DAG">
+<ol>
+  <li>SQS Sensor task monitors institution specific queue, activates when a message is available</li>
+  <li>Message is parsed and BIBFRAME Work and Instance RDF retrieved from the Sinopia API</li>
+  <li>Parallel Processing for Symphony and Folio TaskGroups</li>
+</ol>
 <h4>Stanford's <em>process_folio</em> Task Group</h4>
 <img src="assets/sinopia-stanford-workflow-process_folio.png" style="height: 275px"  alt="Staford Sinopia process_marc TaskGroup">
+<p>
+ <em>bf-graph</em> task takes the raw JSON-LD from the BIBFRAME Work and Instance and constructs a RDF
+   graph for further processing
+</p>
 <h4>Mapping RDF to FOLIO Records</h4>
 <img src="assets/sinopia-stanford-workflow-process_folio-folio_mapping.png" style="height: 750px" alt="Staford Sinopia process_marc FOLIO Mapping">
+<p>
+  Mapping RDF triples to FOLIO specific Instance properties is accomplished by running multiple SPARQL queries in parallel against the
+  BIBFRAME RDF graph constructed from Sinopia resources.
+</p>
+<h5>Title Example</h5>
+<pre>
+PREFIX bf: &lt;http://id.loc.gov/ontologies/bibframe/&gt;
+PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
+SELECT ?main_title ?subtitle ?part_number ?part_name
+WHERE {
+  &lt;https://api.stage.sinopia.io/resource/5289cdf5-816d-4307-ac0d-7cf3de412cb4&gt; a bf:Instance .
+  &lt;https://api.stage.sinopia.io/resource/5289cdf5-816d-4307-ac0d-7cf3de412cb4 &gt; bf:title ?title .
+  ?title a bf:Title .
+  ?title bf:mainTitle ?main_title .
+  OPTIONAL {
+     ?title bf:subtitle ?subtitle .
+  }
+  OPTIONAL {
+     ?title bf:partNumber ?part_number .
+  }
+  OPTIONAL {
+     ?title bf:partName ?part_name
+  }
+}
+</pre>
+<p>
+  Running this SPARQL query results in a list of values that are saved as a retrievable variable through 
+  the task's XCOM.
+</p>
+<img src="assets/title-sparql-xcom.png" alt="Example of XCOM result from Title query" style="width: 1000px;" />
+
+<h4>Build FOLIO Records and FOLIO Login</h4>
+<p>
+  The next tasks, <em>build-folio</em> and <em>folio-login</em>, run in parallel. The <em>build-folio</em> task iterates 
+  through the all of the mapping tasks, retrieves the values, and then constructs the FOLIO Instance JSON record. At the same
+  time the <em>folio-login</em> task logs into FOLIO and retrieves the JWT needed for downstream tasks.
+</p>
+<h4>New or Upsert FOLIO Record</h4>
+
+<h4>Sinopia Update TaskGroup and Sinopia Update Notification</h4>
+<p>
+  After a successful POST to the FOLIO 
 </div>

@@ -34,9 +34,9 @@
   The primary DAG for migrating MARC bibliographic records, the <em>symphony_marc_import</em> DAG is composed of three
   TaskGroups, <strong>move-transform</strong>, <strong>marc21-and-tsv-folio</strong>, and finally <strong>post-to-folio</strong>
 </p>
-<img src="assets/symphony_marc_import-dag.png" alt="Symphony MARC Import DAG" />
+<img src="assets/symphony_marc_import-dag.png" alt="Symphony MARC Import DAG" style="width: 1000px"/>
 <h4>Move-Tranform TaskGroup</h4>
-<img src="assets/move-transforms-taskgroup.png" alt="Move-Transform TaskGroup" />
+<img src="assets/move-transforms-taskgroup.png" alt="Move-Transform TaskGroup" style="width: 1000px">
 <p>
   The purpose of the <strong>move-transform</strong> is to take the MARC 21 file along with it's corresponding tsv files
   and prepare the files for later processing in the <em>symphony_marc_import</em> DAG. </p> For example, 
@@ -51,16 +51,46 @@
   <a href="https://github.com/FOLIO-FSE/folio_migration_tools/">folio_migration_tools</a> expect when run. 
 </p>
 <h4>MARC21 and TSV to FOLIO TaskGroup</h4>
-<img src="assets/marc21-and-tsv-to-folio-taskgroup.png" alt="MARC21 and TSV to FOLIO Records TaskGroup" />
+<img src="assets/marc21-and-tsv-to-folio-taskgroup.png" alt="MARC21 and TSV to FOLIO Records TaskGroup" style="width: 1000px"/>
 <h4>Post to FOLIO TaskGroup</h4>
-<img src="assets/post-to-folio-taskgroup.png" alt="POST FOLIO Records to FOLIO" />
+<img src="assets/post-to-folio-taskgroup.png" alt="POST FOLIO Records to FOLIO" style="width: 1000px" />
+<p>
+  When posting records to FOLIO, each record type is batched and depending on the configuration, one or more parallel
+  tasks are initiated and separate POST calls are made. 
+</p>
+<ol>
+  <li>The first parallel POSTs occurs for the Instance records</li>
+  <li>Check is made and for MARC only workloads and either exits the task-group or continues</li>
+  <li>The second parallel POSTs occurs for the Holdings records</li>
+  <li>The third parallel POSTs occur for the Items records</li>
+</ol>
 <h3><em>ingest_marc_to_srs</em> DAG</h3>
+<img src="assets/add_marc_to_srs.png" alt="MARC to FOLIO Source Record Storage" />
+<p>
+
+</p>
 <h3><em>fix_failed_record_loads</em>DAG</h3>
+<img src="assets/fix_failed_record_loads.png" alt="Fix Record Loads"  style="width: 1000px"/>
 <h2>Recent Functionality</h2>
 
-<h3>Boundwidths, Proceeding/Succeeding Titles</h3>
-
-<h3>MHLD</h3>
-
-
+<h3>Proceeding/Succeeding Titles</h3>
+<p>
+  We are currently extending the FOLIO Migration tools to support proceeding and succeeding titles
+  in the record loads. During the `convert_marc_to_folio_instances` task, we are appending the 
+  proceeding/succeeding records to a file for further processing. 
+</p>
+<p>
+ We are building a separate DAG that reads the file created and that is triggered after the Instance POSTs 
+ are completed. This DAG then POSTs the records individual to Okapi.
+</p>
+<h3>MHLD (MARC Holdings Records) and On-Order </h3>
+<p>
+  In active development, we are building functionality to support MARC Holdings records (MHLDs) ingestion into 
+  FOLIO that will allow us to generate FOLIO Holdings records from MHLD records. This will add at least a 
+  couple of tasks to the `symphony_marc_import` DAG.
+</p>
+<p>
+  We also are working on migrating our current On-Order MARC records that require some modification of existing
+  tasks in the `symphony_marc_import` DAG.
+</p>
 </div>

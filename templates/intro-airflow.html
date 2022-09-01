@@ -12,7 +12,10 @@
   for the following reasons:   
 </p>
 <ul>
-  <li><strong>Ease of use</strong></li>
+  <li><strong>Ease of use</strong> being able to construct complex workflow using Python, one of 
+   most popular and widely supported programming languages, is only part of Airflow's usability.
+   The web-based GUI makes it easy to manage and monitor the workflows and task states.
+  </li>
   <li><strong>Open Source</strong> with a strong developer and user communities.</li>
   <li><strong>Integrations</strong>
    Airflow has a rich ecosystem of plugins for integrating
@@ -29,31 +32,61 @@
    <img src="assets/elasticsearch.png" alt-"ElasticSearch Logo" >
    <img src="assets/kubernetes.png" style="height: 75px" alt="Kubernetes Logo" /> 
   </li>
-  <li><strong>Graphical/Web-based User Interface</strong></li>
-  <li><strong>REST API</strong></li>
+  <li><strong>Graphical/Web-based User Interface</strong> As mentioned above, part of Airflow's a
+
+  </li>
+  <li><strong>REST API</strong> Airflow also provides a REST API for further integration possibilities 
+   along with controlling the Airflow environment through the command-line.</li>
 </ul>
 <h3>Example ETL (Extract-Transform-Load) DAG with Tasks</h3>
 <pre>
+import logging
+from datetime import datetime 
+
+from airflow.decorators import dag, task
+
+logger = logging.getLogger(__name__)
+
+class MockDatabase(object):
+
+    def load(self, records):
+        logger.info(f"Mocks loading {records} into a database")
+
+@dag(
+    schedule_interval=None,
+    start_date=datetime(2022, 9, 2),
+    catchup=False,
+    tags=['example'],
+)
 def etl(*args):
 
+  @task
   def extract(*args, **kwargs):
-      print("Extract data from target")
+      logger.info("Extract data from target")
       return [{"id": 23455, "title": "A Fine Extraction"}]
 
+  @task
   def transform(*args, **kwargs):
       input = kwargs['records']
       output = []
       for record in input:
           record['title'] = f"{record['title']}, now transformed"
+          logger.info(f"Record is {record}")
           output.append(record)
+      logger.info(f"Finished transforming {len(input)}")
       return output
 
+  @task
   def load(*args, **kwargs):
       transformed_records = kwargs['records']
       database = kwargs['db']
       database.load(transformed_records)
 
-  extract() >> transform() >> load()
 
+  records = extract()
+  transformed_orders = transform(records=records) 
+  load(db=MockDatabase(), records=transformed_records)
+
+test_etl = etl()
 </pre>
 </div>
