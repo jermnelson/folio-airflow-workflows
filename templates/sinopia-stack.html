@@ -106,8 +106,16 @@ WHERE {
   time the <em>folio-login</em> task logs into FOLIO and retrieves the JWT needed for downstream tasks.
 </p>
 <h4>New or Upsert FOLIO Record</h4>
-
+<p>
+  The final task in the FOLIO TaskGroup does a POST to the batch Okapi API call that either creates a new Instance FOLIO inventory
+  record or replaces an existing FOLIO Instance record.
+</p>
 <h4>Sinopia Update TaskGroup and Sinopia Update Notification</h4>
 <p>
-  After a successful POST to the FOLIO 
+  After a successful POST to the FOLIO and the completion of the <em>process_folio</em> TaskGroup, the DAG creates a new local 
+  administrative resource in Sinopia reflecting the HRID of the resource and can support other metadata from the FOLIO record.
+</p>
+<p>
+  The final task sends an email to the cataloger about the successful ingestion of RDF into FOLIO (or other ILS record) 
+</p>
 </div>

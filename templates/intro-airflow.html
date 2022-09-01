@@ -41,6 +41,7 @@
 <h3>Example ETL (Extract-Transform-Load) DAG with Tasks</h3>
 <pre>
 import logging
+
 from datetime import datetime 
 
 from airflow.decorators import dag, task
@@ -58,7 +59,7 @@ class MockDatabase(object):
     catchup=False,
     tags=['example'],
 )
-def etl(*args):
+def etl():
 
   @task
   def extract(*args, **kwargs):
@@ -84,9 +85,10 @@ def etl(*args):
 
 
   records = extract()
-  transformed_orders = transform(records=records) 
+  transformed_records = transform(records=records) 
   load(db=MockDatabase(), records=transformed_records)
 
 test_etl = etl()
 </pre>
+<img src="assets/demo-etl.png" alt="Example Demo DAG" />
 </div>
