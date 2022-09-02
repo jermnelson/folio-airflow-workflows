@@ -61,7 +61,7 @@
 <h4>Stanford's <em>process_folio</em> Task Group</h4>
 <img src="assets/sinopia-stanford-workflow-process_folio.png" style="height: 275px"  alt="Staford Sinopia process_marc TaskGroup">
 <p>
- <em>bf-graph</em> task takes the raw JSON-LD from the BIBFRAME Work and Instance and constructs a RDF
+ <strong>bf-graph</strong> task takes the raw JSON-LD from the BIBFRAME Work and Instance and constructs a RDF
    graph for further processing
 </p>
 <h4>Mapping RDF to FOLIO Records</h4>
@@ -101,9 +101,9 @@ WHERE {
 
 <h4>Build FOLIO Records and FOLIO Login</h4>
 <p>
-  The next tasks, <em>build-folio</em> and <em>folio-login</em>, run in parallel. The <em>build-folio</em> task iterates 
+  The next tasks, <strong>build-folio</strong> and <strong>folio-login</strong>, run in parallel. The <strong>build-folio</strong> task iterates 
   through the all of the mapping tasks, retrieves the values, and then constructs the FOLIO Instance JSON record. At the same
-  time the <em>folio-login</em> task logs into FOLIO and retrieves the JWT needed for downstream tasks.
+  time the <strong>folio-login</strong> task logs into FOLIO and retrieves the JWT needed for downstream tasks.
 </p>
 <h4>New or Upsert FOLIO Record</h4>
 <p>
@@ -112,7 +112,7 @@ WHERE {
 </p>
 <h4>Sinopia Update TaskGroup and Sinopia Update Notification</h4>
 <p>
-  After a successful POST to the FOLIO and the completion of the <em>process_folio</em> TaskGroup, the DAG creates a new local 
+  After a successful POST to the FOLIO and the completion of the <strong>process_folio</strong> TaskGroup, the DAG creates a new local 
   administrative resource in Sinopia reflecting the HRID of the resource and can support other metadata from the FOLIO record.
 </p>
 <p>

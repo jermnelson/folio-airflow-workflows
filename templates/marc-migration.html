@@ -83,9 +83,15 @@
  in this DAG triggered by the completion of <em>symphony_marc_import</em> DAG run. 
 </p>
 <ol>
-  <li>First remediation of Instance failed records are posted by individual record to Okapi</li>
-  <li>Next, remediation of Holding failed individual records are posted to Okapi</li>
-  <li>Finally, remediation of single Item failed records are posted to Okapi</li>
+  <li>First remediation of Instance failed records are posted by individual record to Okapi 
+      <strong>instances-handler</strong> task.
+  </li>
+  <li>Next, remediation of Holding failed individual records are posted to Okapi
+      <strong>holdings-handler</strong> task.
+  </li>
+  <li>Finally, remediation of single Item failed records are posted to Okapi
+      <strong>items-handler</strong> task.
+  </li>
 </ol>
 <p>
   Future functionality would add error specific remediation would occur; for example when the 
